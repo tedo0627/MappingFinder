@@ -135,5 +135,29 @@ namespace MappingFinder
         {
             UpdateShowClassNames();
         }
+
+        private void richTextBox2_MouseDown(object sender, MouseEventArgs e)
+        {
+            int line = richTextBox1.GetLineFromCharIndex(richTextBox2.SelectionStart);
+            if (line % 2 != 0) return;
+            line /= 2;
+
+            string text = textBox1.Text;
+
+            if (!memberMapping.ContainsKey(text)) return;
+
+            List<ClassMember> list = memberMapping[text];
+
+            List<string> strList = new List<string>();
+            foreach (ClassMember member in list)
+            {
+                if (!member.Name.StartsWith(textBox2.Text)) continue;
+
+                strList.Add(member.Mapping);
+            }
+
+            if (strList.Count <= line) return;
+            Clipboard.SetText(strList[line]);
+        }
     }
 }
