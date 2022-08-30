@@ -105,6 +105,8 @@ namespace MappingFinder
             List<string> strList = new List<string>();
             foreach (ClassMember member in list)
             {
+                if (!member.Name.StartsWith(textBox2.Text)) continue;
+
                 strList.Add($"{member.Name}: {member.ReturnType} -> {member.Mapping}");
                 strList.Add("");
             }
@@ -127,6 +129,11 @@ namespace MappingFinder
             if (filter.Count <= line) return;
 
             textBox1.Text = filter[line];
+        }
+
+        private void textBox2_TextChanged(object sender, System.EventArgs e)
+        {
+            UpdateShowClassNames();
         }
     }
 }
